@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>JavaSE03常用排序算法 | Hexo</title>
+  <meta name="description" content="常用排序算法面试中经常会被问到或现场写：冒泡、快速  （1）冒泡排序 Bubble Sort  &#96;&#96;&#96;java&#x2F;** 冒泡排序 @param arr 需要排序的数组*&#x2F;public void bubbleSort(int[] arr){for(int i&#x3D; 0;i&lt;arr.length;i++){for(int j &#x3D; 0;j&lt;arr.length-i-1;j++)&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaSE03常用排序算法">
+<meta property="og:url" content="http://example.com/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="常用排序算法面试中经常会被问到或现场写：冒泡、快速  （1）冒泡排序 Bubble Sort  &#96;&#96;&#96;java&#x2F;** 冒泡排序 @param arr 需要排序的数组*&#x2F;public void bubbleSort(int[] arr){for(int i&#x3D; 0;i&lt;arr.length;i++){for(int j &#x3D; 0;j&lt;arr.length-i-1;j++)&amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/1.png">
+<meta property="article:published_time" content="2021-07-19T11:40:04.000Z">
+<meta property="article:modified_time" content="2021-07-19T11:43:01.731Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="JavaSE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/1.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/1.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">帥蝈蝈</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java工程师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 江苏, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaSE/">JavaSE</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/" rel="tag">JavaSE</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/JavaSE/" style="font-size: 14px;">JavaSE</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/JavaSE/">JavaSE</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="title">JavaSE03常用排序算法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-07-19T11:40:04.000Z" itemprop="datePublished">2021-07-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/JavaSE/">JavaSE</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/07/15/JavaSE02%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="title">JavaSE02基础语法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-07-15T06:58:28.000Z" itemprop="datePublished">2021-07-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/JavaSE/">JavaSE</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/07/15/JavaSE01%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="title">JavaSE01环境配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-07-15T06:56:23.000Z" itemprop="datePublished">2021-07-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/hexo/">hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/07/13/hexo-day02/" class="title">hexo-day02</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-07-13T06:55:14.000Z" itemprop="datePublished">2021-07-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/hexo/">hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/07/13/hexo-day01/" class="title">hexo_day01</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-07-13T00:26:36.000Z" itemprop="datePublished">2021-07-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-JavaSE03常用排序算法" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaSE03常用排序算法
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="article-date">
+	  <time datetime="2021-07-19T11:40:04.000Z" itemprop="datePublished">2021-07-19</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/JavaSE/">JavaSE</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/JavaSE/" rel="tag">JavaSE</a>
+  </span>
+
+
+        
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="leancloud_visitors"  data-flag-title="JavaSE03常用排序算法">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 987(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="常用排序算法"><a href="#常用排序算法" class="headerlink" title="常用排序算法"></a>常用排序算法</h1><h2 id="面试中经常会被问到或现场写：冒泡、快速"><a href="#面试中经常会被问到或现场写：冒泡、快速" class="headerlink" title="面试中经常会被问到或现场写：冒泡、快速"></a>面试中经常会被问到或现场写：冒泡、快速</h2><p><img src="/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/1.png"></p>
+<hr>
+<h4 id="（1）冒泡排序-Bubble-Sort"><a href="#（1）冒泡排序-Bubble-Sort" class="headerlink" title="（1）冒泡排序 Bubble Sort"></a>（1）冒泡排序 Bubble Sort</h4><ul>
+<li><ul>
+<li>```java<br>/**<ul>
+<li>冒泡排序<ul>
+<li>@param arr 需要排序的数组<br>*/<br>public void bubbleSort(int[] arr){<br>for(int i= 0;i&lt;arr.length;i++){<pre><code>for(int j = 0;j&lt;arr.length-i-1;j++)&#123;
+    if(arr[j]  &gt; arr[j+1])&#123;
+        int temp;
+        temp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = temp;
+    &#125;                 
+&#125;
+System.out.print(arr[i]  + &quot;,&quot;);
+</code></pre>
+}<br>}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">----------</span><br><span class="line"></span><br><span class="line">#### （2）插入排序 Insert Sort  </span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">   /**</span><br><span class="line">	- 插入排序</span><br><span class="line">    - @param arr 需要排序的数组 </span><br><span class="line">    */</span><br><span class="line">    public static void insertSort(int[] arr)&#123;  </span><br><span class="line">      int length=arr.length; //数组长度  </span><br><span class="line">      int j;               //当前值的位置  </span><br><span class="line">      int i;               //指向j前的位置  </span><br><span class="line">      int key;             //当前要进行插入排序的值  </span><br><span class="line">         //61,19,56,37,20     ,66,50,34,37,3</span><br><span class="line">        // 19 37 56 61 20</span><br><span class="line">        /*</span><br><span class="line">        	key  = 20</span><br><span class="line">        	j =4;</span><br><span class="line">        	i = j-1 = 3</span><br><span class="line">        	a[4] = a[3]</span><br><span class="line">        	19 37 56 61 61</span><br><span class="line">        	i = 2 56 &gt; 20</span><br><span class="line">        	a[3]=a[2]</span><br><span class="line">        	19 37 56 56 61</span><br><span class="line">        	i = 1 37 &gt; 20</span><br><span class="line">        	a[2] = a[1]</span><br><span class="line">        	19 37 37 56 61</span><br><span class="line">        	i =0 19 &gt; 20 false</span><br><span class="line">        	a[1] = key =20</span><br><span class="line">        	</span><br><span class="line">        */</span><br><span class="line">      //从数组的第二个位置开始遍历值     19 37 56 61 20</span><br><span class="line">      for(j=1;j&lt;length;j++)&#123;  </span><br><span class="line">       key=arr[j];  </span><br><span class="line">       i=j-1;  </span><br><span class="line">       //a[i]比当前值大时，a[i]后移一位,空出i的位置，好让下一次循环的值后移  </span><br><span class="line">       while(i&gt;=0 &amp;&amp; arr[i]&gt;key)&#123;  </span><br><span class="line">           arr[i+1]=arr[i]; //将a[i]值后移  </span><br><span class="line">           i--;         //i前移  </span><br><span class="line">       &#125;//跳出循环(找到要插入的中间位置或已遍历到0下标)  </span><br><span class="line">       arr[i+1]=key;    //将当前值插入  </span><br><span class="line">      &#125;  </span><br><span class="line">     &#125;  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="（3）选择排序-Select-Sort"><a href="#（3）选择排序-Select-Sort" class="headerlink" title="（3）选择排序 Select Sort"></a>（3）选择排序 Select Sort</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">- 选择排序</span></span><br><span class="line"><span class="comment">  - <span class="doctag">@param</span> arr 需要排序的数组 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123; </span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;  </span><br><span class="line">         <span class="keyword">int</span> min = i; <span class="comment">// 将当前下标定义为最小值下标 </span></span><br><span class="line">  		 <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;  </span><br><span class="line">                <span class="keyword">if</span> (arr[min] &gt; arr[j]) &#123; <span class="comment">/* 如果有小于当前最小值的关键字 */</span>  </span><br><span class="line">                    min = j; <span class="comment">/* 将此关键字的下标赋值给min */</span>  </span><br><span class="line">                &#125;  </span><br><span class="line">          &#125;  </span><br><span class="line">          <span class="keyword">if</span> (i != min) &#123;<span class="comment">/* 若min不等于i，说明找到最小值，交换 */</span>  </span><br><span class="line">                <span class="keyword">int</span> tmp = arr[min];  </span><br><span class="line">                arr[min] = arr[i];  </span><br><span class="line">                arr[i] = tmp;  </span><br><span class="line">          &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="（4）归并排序-Merge-Sort"><a href="#（4）归并排序-Merge-Sort" class="headerlink" title="（4）归并排序 Merge Sort"></a>（4）归并排序 Merge Sort</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	- 归并排序 </span></span><br><span class="line"><span class="comment">    - <span class="doctag">@param</span> a 需要排序的数组</span></span><br><span class="line"><span class="comment">    - <span class="doctag">@param</span> s 第一个有序表的起始下标 </span></span><br><span class="line"><span class="comment">    - <span class="doctag">@param</span> m 第二个有序表的起始下标 </span></span><br><span class="line"><span class="comment">    - <span class="doctag">@param</span> t 第二个有序表的结束下标 </span></span><br><span class="line"><span class="comment">    - */</span>  </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> s, <span class="keyword">int</span> m, <span class="keyword">int</span> t)</span> </span>&#123;  </span><br><span class="line">  <span class="keyword">int</span>[] tmp = <span class="keyword">new</span> <span class="keyword">int</span>[t - s + <span class="number">1</span>];  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = s, j = m, k = <span class="number">0</span>;  </span><br><span class="line">	  <span class="keyword">while</span> (i &lt; m &amp;&amp; j &lt;= t) &#123;  </span><br><span class="line">	   <span class="keyword">if</span> (arr[i] &lt;= arr[j]) &#123;  </span><br><span class="line">	    tmp[k] = arr[i];  </span><br><span class="line">	    k++;  </span><br><span class="line">	    i++;  </span><br><span class="line">	   &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">	    tmp[k] = arr[j];  </span><br><span class="line">	    <span class="comment">// sum += (j - i) - (j - m);  </span></span><br><span class="line">	    j++;  </span><br><span class="line">	    k++;  </span><br><span class="line">	   &#125;  </span><br><span class="line">	  &#125;  </span><br><span class="line">	  <span class="keyword">while</span> (i &lt; m) &#123;  </span><br><span class="line">	   tmp[k] = arr[i];  </span><br><span class="line">	   i++;  </span><br><span class="line">	   k++;  </span><br><span class="line">	  &#125;  </span><br><span class="line">	  </span><br><span class="line">	  <span class="keyword">while</span> (j &lt;= t) &#123;  </span><br><span class="line">	   tmp[k] = arr[j];  </span><br><span class="line">	   j++;  </span><br><span class="line">	   k++;  </span><br><span class="line">	  &#125;  	  </span><br><span class="line">	  System.arraycopy(tmp, <span class="number">0</span>, arr, s, tmp.length);  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="（5）快速排序-Quick-Sort"><a href="#（5）快速排序-Quick-Sort" class="headerlink" title="（5）快速排序 Quick Sort"></a>（5）快速排序 Quick Sort</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">	  * 获得基础的下标</span></span><br><span class="line"><span class="comment">	  * <span class="doctag">@param</span> arr 需要排序的数组</span></span><br><span class="line"><span class="comment">	  * <span class="doctag">@param</span> low 数组待排序的最小的下标</span></span><br><span class="line"><span class="comment">	  * <span class="doctag">@param</span> high 数组待排序的最大的下标</span></span><br><span class="line"><span class="comment">	  * <span class="doctag">@return</span> 返回中轴值（该值大于左边值，小于右边值）</span></span><br><span class="line"><span class="comment">	  */</span></span><br><span class="line">	  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">int</span> <span class="title">getMiddle</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[low];<span class="comment">// temp = 67</span></span><br><span class="line">          </span><br><span class="line">          <span class="comment">// 67，23，12，11，56，87，23，48，22，18</span></span><br><span class="line">           <span class="comment">// 18，23，12，11，56，87，23，48，22，18</span></span><br><span class="line">           <span class="comment">// 18，23，12，11，56，87，23，48，22，87</span></span><br><span class="line">           <span class="comment">// 18，23，12，11，56，22，23，48，22，87</span></span><br><span class="line">            <span class="comment">// 18，23，12，11，56，22，23，48，67，87</span></span><br><span class="line">          </span><br><span class="line">        <span class="keyword">while</span>(low &lt;high)&#123;<span class="comment">// 0&lt;1</span></span><br><span class="line">            <span class="keyword">while</span>(low &lt;high &amp;&amp; arr[high] &gt; temp)&#123;<span class="comment">//0&lt;1  &amp;&amp; 14&gt;12</span></span><br><span class="line">                high--;<span class="comment">//h  = 0</span></span><br><span class="line">            &#125;</span><br><span class="line">            arr[low] = arr[high]; <span class="comment">// a[0] = a[0];</span></span><br><span class="line">            <span class="keyword">while</span>(low &lt;high &amp;&amp; arr[low] &lt;=temp)&#123;<span class="comment">//</span></span><br><span class="line">                low++;</span><br><span class="line">            &#125;</span><br><span class="line">            arr[high] = arr[low];<span class="comment">//a[0] = a[0]</span></span><br><span class="line">        &#125;</span><br><span class="line">        arr[low] = temp;<span class="comment">//a[0] = 12</span></span><br><span class="line">        <span class="keyword">return</span> low;<span class="comment">// 8</span></span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> low, <span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(low &lt;high)&#123;<span class="comment">//0,1</span></span><br><span class="line">        <span class="comment">//将数组一份为二</span></span><br><span class="line">        <span class="keyword">int</span> middle = getMiddle(arr, low, high);<span class="comment">// arr 0,9  m = 8</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;middle = &quot;</span> + middle);<span class="comment">//m =4</span></span><br><span class="line">        <span class="comment">//左边进行递归 快速排序</span></span><br><span class="line">        quickSort(arr,low,middle -<span class="number">1</span>);  <span class="comment">// arr 0,7</span></span><br><span class="line">        <span class="comment">//右边进行递归 快速排序</span></span><br><span class="line">        quickSort(arr,middle + <span class="number">1</span>,high);<span class="comment">// arr 9，9</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//再次封装，对外调用  12，14</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quick</span><span class="params">(<span class="keyword">int</span>[] arr)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(arr.length  &gt;=<span class="number">2</span>)</span><br><span class="line">        quickSort(arr, <span class="number">0</span>, arr.length -<span class="number">1</span>);<span class="comment">// 0,9</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>[] a =&#123;&#125;</span><br><span class="line"><span class="keyword">int</span>[] a =&#123;<span class="number">65</span>&#125;</span><br><span class="line"><span class="keyword">int</span>[] a =&#123;<span class="number">65</span>,<span class="number">16</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/07/19/JavaSE03%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="JavaSE03常用排序算法" target="_blank" rel="external">http://example.com/2021/07/19/JavaSE03常用排序算法/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/1.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">帥蝈蝈</span><small class="ml-1x">Java工程师</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/07/15/JavaSE02%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="JavaSE02基础语法"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'Gi2HYoeGokuxw7UIuIxGkGR4-gzGzoHsz',
+    appKey: 'j77pDD5q6Nqs6A8VJeF0smiH',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
